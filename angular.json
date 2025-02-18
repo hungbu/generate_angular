@@ -22,14 +22,14 @@
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "less",
+            "inlineStyleLanguage": "css",
             "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.less"],
+            "styles": ["src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -82,14 +82,14 @@
           "options": {
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "less",
+            "inlineStyleLanguage": "css",
             "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.less"],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         }

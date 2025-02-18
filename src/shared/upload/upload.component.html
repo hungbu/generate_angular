@@ -2,45 +2,80 @@
   [class.dragover]="isDragging"
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
-  (drop)="onDrop($event)">
+  (drop)="onDrop($event)"
+  class="m-4 p-4 rounded-lg shadow-md transition-colors duration-200"
+  [class.bg-gray-100]="isDragging">
   <mat-card-content>
-    <div class="drop-zone">
+    <!-- File Drop Zone -->
+    <div 
+      class="drop-zone flex flex-col items-center justify-center text-center p-8 border-2 border-dashed border-gray-300 mb-4 cursor-pointer rounded-lg"
+      [class.border-blue-500]="isDragging"
+      [class.bg-white]="!isDragging">
       <input 
         hidden
         type="file"
         multiple
         #fileInput
         (change)="onFileSelected($event)">
-      <button mat-raised-button (click)="fileInput.click()">
+      <button 
+        mat-raised-button 
+        (click)="fileInput.click()"
+        class="!flex items-center gap-2">
         <mat-icon>upload</mat-icon>
         Select Files
       </button>
-      <p class="drag-text">or drag and drop files here</p>
+      <p class="drag-text mt-2 text-gray-500 text-sm">
+        Drag and drop files here or click to browse
+      </p>
     </div>
-    <mat-list *ngIf="files.length > 0">
-      <mat-list-item *ngFor="let file of files">
-        <span class="file-name">{{ file.name }}</span>
-        <span class="file-size">{{ formatBytes(file.size) }}</span>
-        
-        <!-- Show image preview if available -->
-        <img *ngIf="filePreviews[file.name]" [src]="filePreviews[file.name]" alt="Preview" class="file-preview">
 
-        <button mat-icon-button (click)="removeFile(file)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <mat-progress-bar 
-          *ngIf="uploadProgress[file.name] !== undefined"
-          mode="determinate"
-          [value]="uploadProgress[file.name]">
-        </mat-progress-bar>
-      </mat-list-item>
-    </mat-list>
+    <!-- File List -->
+    <div *ngIf="files.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div 
+        *ngFor="let file of files"
+        class="file-item flex items-center gap-4 p-3 border border-gray-200 rounded-md bg-white shadow-sm">
+        <!-- Image Preview -->
+        <img 
+          *ngIf="filePreviews[file.name]" 
+          [src]="filePreviews[file.name]" 
+          alt="Preview" 
+          class="w-16 h-16 rounded object-cover flex-shrink-0">
+
+        <!-- File Details -->
+        <div class="file-details flex-1 min-w-0">
+          <div class="file-name font-medium truncate">{{ file.name }}</div>
+          <div class="file-size text-gray-500 text-sm">
+            {{ formatBytes(file.size) }}
+          </div>
+          <mat-progress-bar 
+            *ngIf="uploadProgress[file.name] !== undefined"
+            mode="determinate"
+            [value]="uploadProgress[file.name]"
+            class="mt-2">
+          </mat-progress-bar>
+        </div>
+
+        <!-- Actions -->
+        <div class="file-actions flex flex-col items-center gap-2">
+          <button 
+            mat-icon-button 
+            (click)="removeFile(file)"
+            class="!text-red-500">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload Button -->
     <button 
       mat-raised-button 
       color="primary" 
       (click)="uploadFiles()"
-      [disabled]="files.length === 0">
-      Upload All
+      [disabled]="files.length === 0"
+      class="w-full md:w-auto mt-4 !flex items-center gap-2 justify-center">
+      <mat-icon>cloud_upload</mat-icon>
+      Upload All Files
     </button>
   </mat-card-content>
 </mat-card>
