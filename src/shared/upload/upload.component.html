@@ -22,6 +22,9 @@
         <span class="file-name">{{ file.name }}</span>
         <span class="file-size">{{ formatBytes(file.size) }}</span>
         
+        <!-- Show image preview if available -->
+        <img *ngIf="filePreviews[file.name]" [src]="filePreviews[file.name]" alt="Preview" class="file-preview">
+
         <button mat-icon-button (click)="removeFile(file)">
           <mat-icon>delete</mat-icon>
         </button>

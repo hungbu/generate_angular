@@ -30,6 +30,7 @@ import { FileUploadService } from './file-upload.service';
 export class FileUploadComponent {
   files: File[] = [];
   uploadProgress: { [key: string]: number } = {};
+  filePreviews: { [key: string]: string } = {}; // Store image previews
   isDragging = false;
   fileControl = new FormControl<File[]>([]);
   @Output() uploadComplete = new EventEmitter<File[]>();
@@ -62,11 +63,20 @@ export class FileUploadComponent {
   }
 
   private addFiles(files: File[]): void {
+    files.forEach(file => {
+      if (this.isImage(file)) {
+        this.filePreviews[file.name] = URL.createObjectURL(file); // Generate preview URL
+      }
+    });
     this.files = [...this.files, ...files];
     this.fileControl.setValue(this.files);
   }
 
   removeFile(file: File): void {
+    if (this.filePreviews[file.name]) {
+      URL.revokeObjectURL(this.filePreviews[file.name]); // Clean up preview URL
+      delete this.filePreviews[file.name];
+    }
     this.files = this.files.filter(f => f.name !== file.name);
     this.fileControl.setValue(this.files);
   }
@@ -104,5 +114,9 @@ export class FileUploadComponent {
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  }
+
+  private isImage(file: File): boolean {
+    return file.type.startsWith('image/');
   }
 }
