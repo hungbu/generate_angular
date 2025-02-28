@@ -22,10 +22,10 @@
         (click)="fileInput.click()"
         class="!flex items-center gap-2">
         <mat-icon>upload</mat-icon>
-        Select Files
+        {{ 'selectFiles' | translate }}
       </button>
       <p class="drag-text mt-2 text-gray-500 text-sm">
-        Drag and drop files here or click to browse
+        {{ 'dragText' | translate }}
       </p>
     </div>
 
@@ -36,8 +36,8 @@
         class="file-item flex items-center gap-4 p-3 border border-gray-200 rounded-md bg-white shadow-sm">
         <!-- Image Preview -->
         <img 
-          *ngIf="filePreviews[file.name]" 
-          [src]="filePreviews[file.name]" 
+          *ngIf="filePreviews[file.name]"
+          [src]="filePreviews[file.name]"
           alt="Preview" 
           class="w-16 h-16 rounded object-cover flex-shrink-0">
 

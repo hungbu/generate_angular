@@ -10,6 +10,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { HttpEventType } from '@angular/common/http';
 import { FileUploadService } from './file-upload.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-file-upload',
@@ -22,10 +23,11 @@ import { FileUploadService } from './file-upload.service';
     MatProgressBarModule,
     MatCardModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule,
   ],
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.css']
+  styleUrls: ['./upload.component.css'],
 })
 export class FileUploadComponent {
   files: File[] = [];
@@ -35,7 +37,19 @@ export class FileUploadComponent {
   fileControl = new FormControl<File[]>([]);
   @Output() uploadComplete = new EventEmitter<File[]>();
 
-  constructor(private uploadService: FileUploadService) {}
+  constructor(
+    private uploadService: FileUploadService,
+    private translate: TranslateService
+  ) {}
+
+  ngOnInit(): void {
+    this.translate.setDefaultLang('en'); // Set default language
+    this.translate.use('en'); // Load English translations initially
+  }
+
+  switchLanguage(lang: string): void {
+    this.translate.use(lang); // Switch to the selected language
+  }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -63,7 +77,7 @@ export class FileUploadComponent {
   }
 
   private addFiles(files: File[]): void {
-    files.forEach(file => {
+    files.forEach((file) => {
       if (this.isImage(file)) {
         this.filePreviews[file.name] = URL.createObjectURL(file); // Generate preview URL
       }
@@ -77,16 +91,17 @@ export class FileUploadComponent {
       URL.revokeObjectURL(this.filePreviews[file.name]); // Clean up preview URL
       delete this.filePreviews[file.name];
     }
-    this.files = this.files.filter(f => f.name !== file.name);
+    this.files = this.files.filter((f) => f.name !== file.name);
     this.fileControl.setValue(this.files);
   }
 
   uploadFiles(): void {
-    this.files.forEach(file => {
+    this.files.forEach((file) => {
       if (!this.uploadProgress[file.name]) {
         const formData = new FormData();
         formData.append('file', file);
-        this.uploadService.upload(formData)
+        this.uploadService
+          .upload(formData)
           .pipe(
             finalize(() => {
               delete this.uploadProgress[file.name];
@@ -96,13 +111,15 @@ export class FileUploadComponent {
           .subscribe({
             next: (event: any) => {
               if (event.type === HttpEventType.UploadProgress) {
-                this.uploadProgress[file.name] = Math.round(100 * event.loaded / event.total);
+                this.uploadProgress[file.name] = Math.round(
+                  (100 * event.loaded) / event.total
+                );
               }
             },
             error: (error) => {
               console.error('Upload failed:', error);
               delete this.uploadProgress[file.name];
-            }
+            },
           });
       }
     });
