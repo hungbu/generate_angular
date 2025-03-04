@@ -1,4 +1,4 @@
-import { NgModule, provideZoneChangeDetection } from '@angular/core';
+import { NgModule, ApplicationRef, provideZoneChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HttpClient, provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -11,7 +11,6 @@ import { provideRouter } from '@angular/router';
 import { AuthInterceptor } from '../shared/httpClient/auth.interceptor';
 import { ServerTranslationLoader } from '../shared/translate/server-translation.loader';
 import { routes } from './app.routes';
-
 
 // Initialization function to set the default language
 export function appInitializerFactory(translate: TranslateService) {
@@ -33,7 +32,7 @@ export function appInitializerFactory(translate: TranslateService) {
       loader: {
         provide: TranslateLoader,
         useFactory: (http: HttpClient) => new ServerTranslationLoader(http),
-          deps: [HttpClient]
+        deps: [HttpClient]
       }
     })
   ],
@@ -46,14 +45,17 @@ export function appInitializerFactory(translate: TranslateService) {
       multi: true
     },
     provideZoneChangeDetection({ eventCoalescing: true }),
-        provideRouter(routes), // Provide routes here
-        provideHttpClient(withInterceptorsFromDi()),
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: AuthInterceptor,
-          multi: true,
-        },
+    provideRouter(routes), // Provide routes here
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
-  // bootstrap: [AppComponent]  <-- Removed because AppComponent is a standalone component
 })
-export class AppModule { }
+export class AppModule {
+  ngDoBootstrap(appRef: ApplicationRef) {
+    appRef.bootstrap(AppComponent);
+  }
+}

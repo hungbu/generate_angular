@@ -13,15 +13,15 @@ export class ApiService {
 
   // Category API methods
   getCategories(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/categories`);
+    return this.http.get<any[]>(`/categories`);
   }
 
   // Product API methods
   getProducts(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/products`);
+    return this.http.get<any[]>(`/products`);
   }
 
   createProduct(productData: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/products`, productData);
+    return this.http.post(`/products`, productData);
   }
 }
