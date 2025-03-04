@@ -1,0 +1,12 @@
+<div class="category-container">
+    <h2>{{ 'categories.title' | translate }}</h2>
+    <button mat-button (click)="switchLanguage('en')">English</button>
+    <button mat-button (click)="switchLanguage('fr')">French</button>
+  
+    <mat-card *ngFor="let category of categories" class="category-card">
+      <mat-card-title>{{ category.name }}</mat-card-title>
+      <mat-card-content>
+        <p>{{ category.description }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>

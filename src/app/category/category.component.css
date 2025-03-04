@@ -1,0 +1,9 @@
+.category-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .category-card {
+    width: 300px;
+  }

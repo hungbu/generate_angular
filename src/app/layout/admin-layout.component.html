@@ -1,0 +1,64 @@
+<div class="flex h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <aside
+      class="bg-white shadow-md w-64 transition-all duration-300"
+      [class.hidden]="!isSidebarOpen"
+    >
+      <div class="p-4">
+        <h2 class="text-xl font-bold text-gray-800">Admin Panel</h2>
+        <ul class="mt-4 space-y-2">
+          <li>
+            <a
+              href="#"
+              class="flex items-center p-2 text-gray-700 hover:bg-gray-200 rounded"
+            >
+              <mat-icon class="mr-2">dashboard</mat-icon> Dashboard
+            </a>
+          </li>
+          <li>
+            <a
+            routerLink="/admin/categories"
+              class="flex items-center p-2 text-gray-700 hover:bg-gray-200 rounded"
+            >
+              <mat-icon class="mr-2">category</mat-icon> Categories
+            </a>
+          </li>
+          <li>
+            <a
+            routerLink="/admin/products"
+              class="flex items-center p-2 text-gray-700 hover:bg-gray-200 rounded"
+            >
+              <mat-icon class="mr-2">inventory_2</mat-icon> Products
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  
+    <!-- Main Content -->
+    <div class="flex flex-col flex-grow overflow-hidden">
+      <!-- Header -->
+      <header class="bg-white shadow-sm p-4 flex items-center justify-between">
+        <button
+          mat-button
+          class="flex items-center text-gray-700"
+          (click)="toggleSidebar()"
+        >
+          <mat-icon class="mr-2">menu</mat-icon> Toggle Sidebar
+        </button>
+        <div class="flex items-center gap-4">
+          <button mat-icon-button>
+            <mat-icon>notifications</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>account_circle</mat-icon>
+          </button>
+        </div>
+      </header>
+  
+      <!-- Content -->
+      <main class="flex-grow p-4 overflow-auto">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>

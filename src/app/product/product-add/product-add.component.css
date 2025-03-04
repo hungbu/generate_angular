@@ -1,0 +1,10 @@
+.product-form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }

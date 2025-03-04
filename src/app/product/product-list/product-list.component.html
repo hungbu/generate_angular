@@ -1,0 +1,13 @@
+<div class="product-container">
+    <h2> product title </h2>
+    <button mat-button (click)="switchLanguage('en')">English</button>
+    <button mat-button (click)="switchLanguage('fr')">French</button>
+  
+    <mat-card *ngFor="let product of products" class="product-card">
+      <mat-card-title>{{ product.name }}</mat-card-title>
+      <mat-card-content>
+        <p>{{ product.description }}</p>
+        <p><strong>Price:</strong> {{ product.price | currency }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
