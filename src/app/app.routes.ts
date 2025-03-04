@@ -3,6 +3,13 @@ import { AdminLayoutComponent } from './layout/admin-layout.component';
 import { CategoryComponent } from './category/category.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ProductAddComponent } from './product/product-add/product-add.component';
+import { AppComponent } from './app.component';
+
+// Define application routes
+export const appRoutes: Routes = [
+  { path: '', component: AppComponent },
+  // ...add more routes here...
+];
 
 export const routes: Routes = [
     {

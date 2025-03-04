@@ -10,6 +10,6 @@ export class ServerTranslationLoader implements TranslateLoader {
 
   getTranslation(lang: string): Observable<any> {
     const apiUrl = environment.apiUrl;
-    return this.http.get(`${apiUrl}/translations/${lang}.json`);
+    return this.http.get(`/translations/${lang}`);
   }
 }
