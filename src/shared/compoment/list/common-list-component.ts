@@ -21,7 +21,7 @@ import { ApiService } from '../../../app/service/api.service';
   templateUrl: './common-list.component.html',
 })
 export class CommonListComponent implements OnInit {
-  @Input() products: any[] = [];
+  @Input() data: any[] = [];
   @Input() links: any = {};
   @Input() meta: any = {};
   @Output() onEdit = new EventEmitter<any>();
@@ -57,11 +57,11 @@ export class CommonListComponent implements OnInit {
     this.translate.use(lang);
   }
 
-  editProduct(product: any): void {
-    this.onEdit.emit(product);
+  edit(item: any): void {
+    this.onEdit.emit(item);
   }
 
-  deleteProduct(product: any): void {
-    this.onDelete.emit(product);
+  delete(item: any): void {
+    this.onDelete.emit(item);
   }
 }
