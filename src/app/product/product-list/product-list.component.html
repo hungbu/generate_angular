@@ -1,30 +1,10 @@
-<div class="product-container">
-    <h2> product title </h2>
-    <button mat-button (click)="switchLanguage('en')">English</button>
-    <button mat-button (click)="switchLanguage('vi')">VN</button>
-  
-    <mat-card *ngFor="let product of products" class="product-card">
-      <mat-card-title>{{ product.name }}</mat-card-title>
-      <mat-card-content>
-        <p>{{ product.description }}</p>
-        <p><strong>Price:</strong> {{ product.price | currency }}</p>
-      </mat-card-content>
-    </mat-card>
-
-    <div class="pagination-controls">
-      <button
-        mat-button
-        [disabled]="!meta.links.prev"
-        (click)="loadPage(meta.links.prev)"
-      >
-        Previous
-      </button>
-      <button
-        mat-button
-        [disabled]="!meta.links.next"
-        (click)="loadPage(meta.links.next)"
-      >
-        Next
-      </button>
-    </div>
-  </div>
+<app-common-list
+  [products]="products"
+  [links]="links"
+  [meta]="meta"
+  (onEdit)="handleEdit($event)"
+  (onDelete)="handleDelete($event)"
+  (onSearch)="handleSearch($event)"
+  (onPageChange)="handlePageChange($event)"
+  (onPerPageChange)="handlePerPageChange($event)"
+></app-common-list>

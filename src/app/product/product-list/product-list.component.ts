@@ -1,39 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
 import { ApiService } from '../../service/api.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CommonListComponent } from "../../../shared/compoment/list/common-list-component";
 
 @Component({
   selector: 'app-product-list',
-  standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, TranslateModule],
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css'],
-  providers: [TranslateService] // Add this line
+  imports: [CommonListComponent]
 })
 export class ProductListComponent implements OnInit {
   products: any[] = [];
   links: any = {};
   meta: any = {};
 
-  constructor(
-    private apiService: ApiService,
-    private translate: TranslateService
-  ) {}
+  constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.translate.setDefaultLang('en');
-    this.translate.use('en');
-
-    this.fetchProducts(1);
+    this.fetchProducts();
   }
 
-  fetchProducts(page: number = 1): void {
-    this.apiService.getProducts(page).subscribe({
+  fetchProducts(page: number = 1, perPage: number = 10): void {
+    this.apiService.getProducts(page, { perPage }).subscribe({
       next: (response: any) => {
-
         if (response && Array.isArray(response.data)) {
           this.products = response.data;
           this.links = response.links;
@@ -49,15 +36,24 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  loadPage(url: string | null): void {
-    if (!url) return;
-    const pageNumber = new URL(url).searchParams.get('page');
-    if (pageNumber) {
-      this.fetchProducts(Number(pageNumber));
-    }
+  handleEdit(product: any): void {
+    console.log('Editing product:', product);
   }
 
-  switchLanguage(lang: string): void {
-    this.translate.use(lang);
+  handleDelete(product: any): void {
+    console.log('Deleting product:', product);
+  }
+
+  handleSearch(searchTerm: string): void {
+    console.log('Searching for products:', searchTerm);
+    // You can integrate the search with the API if needed.
+  }
+
+  handlePageChange(page: number): void {
+    this.fetchProducts(page, this.meta.per_page);
+  }
+
+  handlePerPageChange(perPage: number): void {
+    this.fetchProducts(1, perPage);
   }
 }
