@@ -11,6 +11,8 @@ import { provideRouter } from '@angular/router';
 import { AuthInterceptor } from '../shared/httpClient/auth.interceptor';
 import { ServerTranslationLoader } from '../shared/translate/server-translation.loader';
 import { routes } from './app.routes';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 
 // Initialization function to set the default language
 export function appInitializerFactory(translate: TranslateService) {
@@ -34,7 +36,8 @@ export function appInitializerFactory(translate: TranslateService) {
         useFactory: (http: HttpClient) => new ServerTranslationLoader(http),
         deps: [HttpClient]
       }
-    })
+    }),
+    CommonModule,
   ],
   providers: [
     // Use APP_INITIALIZER to load translations before app startup
@@ -45,13 +48,14 @@ export function appInitializerFactory(translate: TranslateService) {
       multi: true
     },
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes), // Provide routes here
+    provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
     },
+    provideAnimations()
   ],
 })
 export class AppModule {

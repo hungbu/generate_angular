@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../service/api.service';
-import { CommonListComponent } from "../../../shared/compoment/list/common-list-component";
+import { CommonListComponent } from '../../../shared/compoment/list/common-list.component';
 
 @Component({
   selector: 'app-product-list',

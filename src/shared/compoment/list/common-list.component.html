@@ -1,14 +1,10 @@
 <div class="product-container">
-  <h2>Product List</h2>
+  <h2>{{ title }}</h2>
   <div class="filter-section flex justify-between mb-4">
     <div class="search-bar flex items-center space-x-2">
       <mat-form-field appearance="fill">
         <input matInput placeholder="{{ 'SEARCH' | translate }}" (keyup)="search($event)" />
       </mat-form-field>
-    </div>
-    <div class="language-select flex items-center space-x-2">
-      <button mat-button (click)="switchLanguage('en')">English</button>
-      <button mat-button (click)="switchLanguage('vi')">VN</button>
     </div>
   </div>
 
@@ -40,21 +36,26 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <div class="pagination-controls mt-4">
+  <div class="pagination-controls mt-4 flex items-center space-x-4">
+    <div class="pagination-buttons flex space-x-2">
+      <button mat-button [disabled]="!meta?.links?.prev" (click)="loadPage(meta?.links?.prev)">
+        Previous
+      </button>
+      <ng-container *ngFor="let link of meta?.links">
+        <button mat-button [class.active]="link.active" (click)="loadPage(link.url)" [disabled]="!link.url">
+          {{ link.label }}
+        </button>
+      </ng-container>
+      <button mat-button [disabled]="!meta?.links?.next" (click)="loadPage(meta?.links?.next)">
+        Next
+      </button>
+    </div>
+
     <mat-form-field appearance="fill">
       <mat-label>Items per page</mat-label>
       <mat-select [(value)]="perPage" (selectionChange)="changePerPage($event.value)">
         <mat-option *ngFor="let item of [5, 10, 15, 20]" [value]="item">{{ item }}</mat-option>
       </mat-select>
     </mat-form-field>
-
-    <div class="pagination-buttons flex space-x-2">
-      <button mat-button [disabled]="!meta?.links?.prev" (click)="loadPage(meta?.links?.prev)">
-        Previous
-      </button>
-      <button mat-button [disabled]="!meta?.links?.next" (click)="loadPage(meta?.links?.next)">
-        Next
-      </button>
-    </div>
   </div>
 </div>

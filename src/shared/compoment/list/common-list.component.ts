@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,6 +21,7 @@ import { ApiService } from '../../../app/service/api.service';
   templateUrl: './common-list.component.html',
 })
 export class CommonListComponent implements OnInit {
+  @Input() title: string = 'title';
   @Input() data: any[] = [];
   @Input() links: any = {};
   @Input() meta: any = {};
