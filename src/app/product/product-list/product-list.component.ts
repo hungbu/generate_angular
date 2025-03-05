@@ -10,7 +10,7 @@ import { CommonListComponent } from "../../../shared/compoment/list/common-list-
 export class ProductListComponent implements OnInit {
   products: any[] = [];
   links: any = {};
-  meta: any = {};
+  meta: any = { links: {} }; // Initialize meta.links to avoid undefined errors
 
   constructor(private apiService: ApiService) {}
 
