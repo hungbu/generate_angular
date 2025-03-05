@@ -1,7 +1,7 @@
 <div class="product-container">
     <h2> product title </h2>
     <button mat-button (click)="switchLanguage('en')">English</button>
-    <button mat-button (click)="switchLanguage('fr')">French</button>
+    <button mat-button (click)="switchLanguage('vi')">VN</button>
   
     <mat-card *ngFor="let product of products" class="product-card">
       <mat-card-title>{{ product.name }}</mat-card-title>
@@ -10,4 +10,21 @@
         <p><strong>Price:</strong> {{ product.price | currency }}</p>
       </mat-card-content>
     </mat-card>
+
+    <div class="pagination-controls">
+      <button
+        mat-button
+        [disabled]="!meta.links.prev"
+        (click)="loadPage(meta.links.prev)"
+      >
+        Previous
+      </button>
+      <button
+        mat-button
+        [disabled]="!meta.links.next"
+        (click)="loadPage(meta.links.next)"
+      >
+        Next
+      </button>
+    </div>
   </div>

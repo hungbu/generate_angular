@@ -15,6 +15,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class ProductListComponent implements OnInit {
   products: any[] = [];
+  links: any = {};
+  meta: any = {};
 
   constructor(
     private apiService: ApiService,
@@ -25,14 +27,34 @@ export class ProductListComponent implements OnInit {
     this.translate.setDefaultLang('en');
     this.translate.use('en');
 
-    this.apiService.getProducts().subscribe({
-      next: (data) => {
-        this.products = data;
+    this.fetchProducts(1);
+  }
+
+  fetchProducts(page: number = 1): void {
+    this.apiService.getProducts(page).subscribe({
+      next: (response: any) => {
+
+        if (response && Array.isArray(response.data)) {
+          this.products = response.data;
+          this.links = response.links;
+          this.meta = response.meta;
+        } else {
+          console.warn('Unexpected API response:', response);
+          this.products = [];
+        }
       },
       error: (err) => {
         console.error('Failed to fetch products:', err);
       },
     });
+  }
+
+  loadPage(url: string | null): void {
+    if (!url) return;
+    const pageNumber = new URL(url).searchParams.get('page');
+    if (pageNumber) {
+      this.fetchProducts(Number(pageNumber));
+    }
   }
 
   switchLanguage(lang: string): void {

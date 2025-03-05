@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -7,18 +7,21 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class ApiService {
-  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
   // Category API methods
-  getCategories(): Observable<any[]> {
-    return this.http.get<any[]>(`/categories`);
+  getCategories(page: number = 1, { perPage }: { perPage: number } = { perPage: 20 }): Observable<any> {
+    let params = new HttpParams().set('page', page.toString());
+    params.set('per_page', perPage.toString());
+    return this.http.get<any>(`/categories`, { params });
   }
 
   // Product API methods
-  getProducts(): Observable<any[]> {
-    return this.http.get<any[]>(`/products`);
+  getProducts(page: number = 1, { perPage }: { perPage: number } = { perPage: 20 }): Observable<any> {
+    let params = new HttpParams().set('page', page.toString());
+    params.set('per_page', perPage.toString());
+    return this.http.get<any>(`/products`, { params });
   }
 
   createProduct(productData: any): Observable<any> {
