@@ -12,13 +12,16 @@ export class ProductListComponent implements OnInit {
   links: any = {};
   meta: any = { links: {} }; // Initialize meta.links to avoid undefined errors
 
-  constructor(private apiService: ApiService) {}
+  currentPage: number = 1;
+  perPage: number = 10;
+
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.fetchProducts();
+    this.loadProducts();
   }
 
-  fetchProducts(page: number = 1, perPage: number = 10): void {
+  loadProducts(page: number = 1, perPage: number = this.perPage): void {
     this.apiService.getProducts(page, { perPage }).subscribe({
       next: (response: any) => {
         if (response && Array.isArray(response.data)) {
@@ -49,11 +52,13 @@ export class ProductListComponent implements OnInit {
     // You can integrate the search with the API if needed.
   }
 
-  handlePageChange(page: number): void {
-    this.fetchProducts(page, this.meta.per_page);
+  onPageChanged(page: number): void {
+    this.loadProducts(page);
   }
 
-  handlePerPageChange(perPage: number): void {
-    this.fetchProducts(1, perPage);
+  onPerPageChanged(perPage: number): void {
+    //reset current page to 1
+    this.currentPage = 1;
+    this.loadProducts(this.currentPage, perPage)
   }
 }

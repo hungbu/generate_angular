@@ -1,24 +1,26 @@
-import { Component, EventEmitter, Input, Output, OnInit, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ApiService } from '../../../app/service/api.service';
+import { MatIconModule } from '@angular/material/icon';
+import { PaginationComponent } from "./pagination/pagination.component";
 
 @Component({
   selector: 'app-common-list',
   standalone: true,
   imports: [
     CommonModule, MatCardModule, MatButtonModule, TranslateModule,
-    MatTableModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatPaginatorModule
+    MatTableModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatPaginatorModule, MatIconModule,
+    PaginationComponent
   ],
   templateUrl: './common-list.component.html',
+  providers: [CurrencyPipe]
 })
 export class CommonListComponent implements OnInit {
   @Input() title: string = 'title';
@@ -33,7 +35,7 @@ export class CommonListComponent implements OnInit {
   displayedColumns: string[] = ['name', 'description', 'price', 'actions'];
   perPage: number = 10;
   
-  constructor(private apiService: ApiService, private translate: TranslateService) {}
+  constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
     this.translate.setDefaultLang('en');
@@ -49,7 +51,7 @@ export class CommonListComponent implements OnInit {
     this.onPageChange.emit(pageNumber);
   }
 
-  changePerPage(value: number): void {
+  perPageChanged(value: number): void {
     this.perPage = value;
     this.onPerPageChange.emit(value);
   }

@@ -36,26 +36,5 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <div class="pagination-controls mt-4 flex items-center space-x-4">
-    <div class="pagination-buttons flex space-x-2">
-      <button mat-button [disabled]="!meta?.links?.prev" (click)="loadPage(meta?.links?.prev)">
-        Previous
-      </button>
-      <ng-container *ngFor="let link of meta?.links">
-        <button mat-button [class.active]="link.active" (click)="loadPage(link.url)" [disabled]="!link.url">
-          {{ link.label }}
-        </button>
-      </ng-container>
-      <button mat-button [disabled]="!meta?.links?.next" (click)="loadPage(meta?.links?.next)">
-        Next
-      </button>
-    </div>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Items per page</mat-label>
-      <mat-select [(value)]="perPage" (selectionChange)="changePerPage($event.value)">
-        <mat-option *ngFor="let item of [5, 10, 15, 20]" [value]="item">{{ item }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+  <app-pagination [meta]="meta" (pageChanged)="loadPage($event)" (perPageChanged)="perPageChanged($event)"></app-pagination>
 </div>

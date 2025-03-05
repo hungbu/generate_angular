@@ -1,0 +1,27 @@
+<div class="pagination-controls mt-4 flex items-center space-x-4" *ngIf="meta"> <!-- Added *ngIf="meta" -->
+    <div class="pagination-info">
+        <span class="mr-4">{{ meta?.total }} items </span>
+        <span>Page {{ meta?.current_page }} of {{ meta?.last_page }}</span>
+    </div>
+
+    <div class="pagination-buttons flex space-x-2">
+        <button mat-stroked-button [disabled]="meta.current_page === 1" (click)="loadPage(meta.current_page - 1)">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+        <ng-container *ngFor="let page of getPages(); trackBy: trackByFn">
+            <button mat-stroked-button [class.active]="meta.current_page === page" (click)="loadPage(page)">
+                {{ page }}
+            </button>
+        </ng-container>
+        <button [disabled]="meta.current_page === meta?.last_page" (click)="loadPage(meta.current_page + 1)">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
+    </div>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Items per page</mat-label>
+        <mat-select [(value)]="perPage" (selectionChange)="changePerPage($event.value)"> <!-- Simplified event binding -->
+            <mat-option *ngFor="let item of [5, 10, 15, 20]; trackBy: trackByFn" [value]="item">{{ item }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
