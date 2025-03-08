@@ -1,22 +1,14 @@
 <div
-  class="pagination-controls mt-4 flex flex-row-reverse justify-end items-left space-x-4 ng-star-inserted"
+  class="pagination-controls mt-4 flex justify-end items-left space-x-4 ng-star-inserted"
   *ngIf="meta"
 >
-  <!-- Items per page Dropdown -->
-  <div class="items-per-page">
-    <mat-form-field appearance="fill">
-      <mat-label>Items per page</mat-label>
-      <mat-select
-        [(value)]="perPage"
-        (selectionChange)="changePerPage($event.value)"
-      >
-        <mat-option
-          *ngFor="let item of [5, 10, 15, 20]; trackBy: trackByFn"
-          [value]="item"
-          >{{ item }}</mat-option
-        >
-      </mat-select>
-    </mat-form-field>
+  <!-- Pagination Info (Page X of Y, Total items) -->
+  <div class="pagination-info flex items-center space-x-2">
+    <span>{{ meta?.total }} {{ "ITEMS" | translate }}</span>
+    <span
+      >{{ "PAGE" | translate }} {{ meta?.current_page }} {{ "OF" | translate }}
+      {{ meta?.last_page }}</span
+    >
   </div>
 
   <!-- Pagination Buttons (Previous, Page numbers, Next) -->
@@ -55,9 +47,20 @@
     </button>
   </div>
 
-  <!-- Pagination Info (Page X of Y, Total items) -->
-  <div class="pagination-info flex items-center space-x-2">
-    <span>{{ meta?.total }} items</span>
-    <span>Page {{ meta?.current_page }} of {{ meta?.last_page }}</span>
+  <!-- Items per page Dropdown -->
+  <div class="items-per-page space-x-2">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "ITEMS_PER_PAGE" | translate }}</mat-label>
+      <mat-select
+        [(value)]="perPage"
+        (selectionChange)="changePerPage($event.value)"
+      >
+        <mat-option
+          *ngFor="let item of [5, 10, 15, 20]; trackBy: trackByFn"
+          [value]="item"
+          >{{ item }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
   </div>
 </div>

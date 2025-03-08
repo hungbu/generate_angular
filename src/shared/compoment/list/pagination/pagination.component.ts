@@ -3,9 +3,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select'; // Import MatSelectChange
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    imports: [CommonModule, MatSelectModule, MatIcon, MatButtonModule],
+    imports: [CommonModule, MatSelectModule, MatIcon, MatButtonModule, TranslateModule],
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
 })
