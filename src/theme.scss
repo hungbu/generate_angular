@@ -1,0 +1,14 @@
+// src/theme.scss
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+.mat-mdc-outlined-button>.mat-icon {
+  margin: 0;
+}
+
+.mdc-button.mat-mdc-outlined-button.mat-mdc-button-base {
+  @apply rounded-[6px]; // Tailwind utility for border-radius
+  padding: 8px 16px;
+  min-width: 24px;
+}
