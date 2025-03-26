@@ -16,7 +16,7 @@ export class PaginationComponent implements OnInit {
   @Output() pageChanged = new EventEmitter<number>(); // Output event for page changes
   @Output() perPageChanged = new EventEmitter<number>(); // Output event for per page changes.
 
-  perPage: number = 10; // Default per page value
+  perPage: number = 20; // Default per page value
 
   constructor() { }
 

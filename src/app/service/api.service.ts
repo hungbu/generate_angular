@@ -11,15 +11,15 @@ export class ApiService {
 
   // Category API methods
   getCategories(page: number = 1, { perPage }: { perPage: number } = { perPage: 20 }): Observable<any> {
-    let params = new HttpParams().set('page', page.toString());
-    params.set('per_page', perPage.toString());
+    let params = new HttpParams().set('page', page.toString()).set('per_page', perPage.toString());
     return this.http.get<any>(`/categories`, { params });
   }
 
   // Product API methods
   getProducts(page: number = 1, { perPage }: { perPage: number } = { perPage: 20 }): Observable<any> {
-    let params = new HttpParams().set('page', page.toString());
-    params.set('per_page', perPage.toString());
+    console.log('getProducts perPage:', perPage);
+    
+    let params = new HttpParams().set('page', page.toString()).set('per_page', perPage.toString());
     return this.http.get<any>(`/products`, { params });
   }
 

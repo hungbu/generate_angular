@@ -33,7 +33,6 @@ export class CommonListComponent implements OnInit {
   @Output() onPageChange = new EventEmitter<number>();
   @Output() onPerPageChange = new EventEmitter<number>();
   displayedColumns: string[] = ['name', 'description', 'price', 'actions'];
-  perPage: number = 10;
   
   constructor(private translate: TranslateService) {}
 
@@ -52,7 +51,6 @@ export class CommonListComponent implements OnInit {
   }
 
   perPageChanged(value: number): void {
-    this.perPage = value;
     this.onPerPageChange.emit(value);
   }
 

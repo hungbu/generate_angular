@@ -13,7 +13,7 @@ export class ProductListComponent implements OnInit {
   meta: any = { links: {} }; // Initialize meta.links to avoid undefined errors
 
   currentPage: number = 1;
-  perPage: number = 10;
+  perPage: number = 20;
 
   constructor(private apiService: ApiService) { }
 
@@ -22,6 +22,8 @@ export class ProductListComponent implements OnInit {
   }
 
   loadProducts(page: number = 1, perPage: number = this.perPage): void {
+    console.log('Loading products page:', page, 'perPage:', perPage);
+    
     this.apiService.getProducts(page, { perPage }).subscribe({
       next: (response: any) => {
         if (response && Array.isArray(response.data)) {
