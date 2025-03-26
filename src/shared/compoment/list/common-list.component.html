@@ -36,5 +36,5 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <app-pagination [meta]="meta" (pageChanged)="loadPage($event)" (perPageChanged)="perPageChanged($event)"></app-pagination>
+  <app-pagination [meta]="meta" (pageChanged)="loadPage($event)" (perPageChanged)="perPageChanged($event)" [maxVisiblePages]="7"></app-pagination>
 </div>

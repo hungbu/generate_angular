@@ -61,6 +61,7 @@ export class ProductListComponent implements OnInit {
   onPerPageChanged(perPage: number): void {
     //reset current page to 1
     this.currentPage = 1;
+    this.perPage = perPage;
     this.loadProducts(this.currentPage, perPage)
   }
 }
